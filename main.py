@@ -5,6 +5,8 @@ from filter import filter_two
 from angle import segment_by_angle_kmeans
 from intersection import segmented_intersections
 from boxes import rect
+from contours import max_area
+import joblib
 
 #img = cv2.imread('sudoku.jpeg')
 cap = cv2.VideoCapture(0)
@@ -19,7 +21,6 @@ while True:
     edges = cv2.dilate(edges, kernel, iterations=1)
     kernel = np.ones((5, 5), np.uint8)
     edges = cv2.erode(edges, kernel, iterations=1)
-    cv2.imwrite('canny.jpg', edges)
 
     lines = cv2.HoughLines(edges, 1, np.pi/180, 150)
 
@@ -51,7 +52,7 @@ while True:
         x2 = int(x0 - 1000*(-b))
         y2 = int(y0 - 1000*(a))
 
-        cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 2)
+        #cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 2)
     
     segmented = segment_by_angle_kmeans(filtered_lines)
     intersections = segmented_intersections(segmented) # points
@@ -69,6 +70,9 @@ while True:
         pass
 
 intersections = [val[0] for val in intersections]
+intersections = sorted(intersections,key=lambda val: val[0])
+
+image = rect(img,intersections)
 
 while True:
     cv2.imshow('img',img)
