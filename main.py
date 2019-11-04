@@ -7,6 +7,7 @@ from intersection import segmented_intersections
 from boxes import rect
 from contours import max_area
 import joblib
+import sudoku
 
 #img = cv2.imread('sudoku.jpeg')
 cap = cv2.VideoCapture(0)
@@ -72,11 +73,16 @@ while True:
 intersections = [val[0] for val in intersections]
 intersections = sorted(intersections,key=lambda val: val[0])
 
-image = rect(img,intersections)
+image,prediction = rect(img,intersections)
 
 while True:
-    cv2.imshow('img',img)
+    cv2.imshow('img',image)
     if cv2.waitKey(2) & 0xFF == 27:
         break
 
 cv2.destroyAllWindows()
+
+if sudoku.SolveSudoku(prediction):
+    print(sudoku.SolveSudoku(prediction))
+else:
+    print('bad luck')
