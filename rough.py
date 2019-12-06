@@ -15,6 +15,7 @@ for folder in list_folder:
         im = cv2.cvtColor(im, cv2.COLOR_RGB2GRAY )
         im = cv2.resize(im, (36,36))
         trainset.append(im)
+
 # Labeling for trainset
 train_label = []
 for i in range(0,10):
@@ -47,5 +48,4 @@ print("Training finished successfully")
 testset = np.reshape(testset, (len(testset), -1))
 y = clf.predict(testset)
 print("Testing accuracy: " + str(clf.score(testset, test_label)))
-
 joblib.dump(clf, "classifier.pkl", compress=3)
