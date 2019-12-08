@@ -48,4 +48,5 @@ print("Training finished successfully")
 testset = np.reshape(testset, (len(testset), -1))
 y = clf.predict(testset)
 print("Testing accuracy: " + str(clf.score(testset, test_label)))
+
 joblib.dump(clf, "classifier.pkl", compress=3)
