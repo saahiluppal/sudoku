@@ -53,8 +53,8 @@ while True:
         x2 = int(x0 - 1000*(-b))
         y2 = int(y0 - 1000*(a))
 
-        #cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 2)
-    
+        cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 2)
+
     segmented = segment_by_angle_kmeans(filtered_lines)
     intersections = segmented_intersections(segmented) # points
 
@@ -64,9 +64,9 @@ while True:
         break
 
     try:
-        if len(intersections) == 100 and len(filtered_lines) == 20:
-            print('Got')
-            break
+       if len(intersections) == 100 and len(filtered_lines) == 20:
+           print('Got')
+           break
     except:
         pass
 
