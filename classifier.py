@@ -59,7 +59,6 @@ model = tf.keras.models.Sequential([
 
     tf.keras.layers.Flatten(),
     tf.keras.layers.Dense(128, activation=tf.nn.relu),
-    tf.keras.layers.Dropout(0.5),
     tf.keras.layers.Dense(11, activation=tf.nn.softmax),
 ])
 
@@ -69,6 +68,6 @@ model.compile(optimizer=tf.keras.optimizers.Adam(), loss=tf.keras.losses.sparse_
 es = tf.keras.callbacks.EarlyStopping()
 model.fit(X_train,y_train, epochs=10, batch_size=128, callbacks=[es],validation_data=(X_test, y_test))
 
-model.evaluate(X_test, y_test)
+print(model.evaluate(X_test, y_test))
 
 model.save('classifier_new.h5')
