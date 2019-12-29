@@ -63,7 +63,7 @@ while True:
 
 
     cv2.imshow('image', img)
-    if cv2.waitKey(1) & 0xFF == 27:
+    if cv2.waitKey(10) & 0xFF == ord('q'):
         break
 
     try:
@@ -85,9 +85,8 @@ while True:
 
 cv2.destroyAllWindows()
 
-"""
+
 if sudoku.SolveSudoku(prediction):
     print(sudoku.SolveSudoku(prediction))
 else:
     print('bad luck')
-"""
