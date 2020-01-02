@@ -42,10 +42,12 @@ print('Dataset Info::')
 model = tf.keras.models.Sequential([
     tf.keras.layers.Convolution2D(filters=32, kernel_size=3, padding='same', activation=tf.nn.relu
                                  , input_shape=(28,28,1)),
+    tf.keras.layers.BatchNormalization(),
     tf.keras.layers.Convolution2D(filters=32, kernel_size=3, padding='same', activation=tf.nn.relu),
     tf.keras.layers.MaxPooling2D(pool_size=(2,2), strides=2),
 
     tf.keras.layers.Convolution2D(filters=64, kernel_size=3, padding='same', activation=tf.nn.relu),
+    tf.keras.layers.BatchNormalization(),
     tf.keras.layers.Convolution2D(filters=64, kernel_size=3, padding='same', activation=tf.nn.relu),
     tf.keras.layers.MaxPooling2D(pool_size=(2,2), strides=2),
 
@@ -70,4 +72,4 @@ model.fit(X_train,y_train, epochs=10, batch_size=128, callbacks=[es],validation_
 
 print(model.evaluate(X_test, y_test))
 
-model.save('classifier_new.h5')
+model.save('classifier4.h5')
