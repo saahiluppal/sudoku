@@ -1,12 +1,15 @@
+import warnings
+warnings.filterwarnings('ignore')
 import cv2
 import numpy as np
 from filter import filter_one
 from filter import filter_two
 from angle import segment_by_angle_kmeans
 from intersection import segmented_intersections
-from boxes import rect
+#from boxes import rect
+from boxesrc import rect
 from contours import max_area
-import joblib
+#import tensorflow as tf
 import sudoku
 
 #img = cv2.imread('sudoku.jpeg')
@@ -53,27 +56,25 @@ while True:
         x2 = int(x0 - 1000*(-b))
         y2 = int(y0 - 1000*(a))
 
-        cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 2)
+        #cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 2)
 
     segmented = segment_by_angle_kmeans(filtered_lines)
     intersections = segmented_intersections(segmented) # points
 
-
-    cv2.imshow('image', img)
-    if cv2.waitKey(1) & 0xFF == 27:
-        break
-
     try:
-       if len(intersections) == 100 and len(filtered_lines) == 20:
-           print('Got')
-           break
+        if len(intersections) == 100 and len(filtered_lines) == 20:
+            intersections = [val[0] for val in intersections]
+            intersections = sorted(intersections,key=lambda val: val[0])
+            img, prediction, done = rect(img, intersections)
+            if done:
+                exit()
     except:
         pass
+    
 
-intersections = [val[0] for val in intersections]
-intersections = sorted(intersections,key=lambda val: val[0])
-
-image,prediction = rect(img,intersections)
+    cv2.imshow('image', img)
+    if cv2.waitKey(10) & 0xFF == ord('q'):
+        break
 
 while True:
     cv2.imshow('img',image)
@@ -81,6 +82,7 @@ while True:
         break
 
 cv2.destroyAllWindows()
+
 
 if sudoku.SolveSudoku(prediction):
     print(sudoku.SolveSudoku(prediction))
