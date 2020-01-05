@@ -9,7 +9,7 @@ def rect(img, intersections):
     image = cv2.adaptiveThreshold(
         image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 101, 1)
 
-    clf = keras.models.load_model('classifier2.h5')
+    clf = keras.models.load_model('keras_augumented_modelv2.h5')
     font = cv2.FONT_HERSHEY_SIMPLEX
 
     img2 = img.copy()

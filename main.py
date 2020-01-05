@@ -6,8 +6,8 @@ from filter import filter_one
 from filter import filter_two
 from angle import segment_by_angle_kmeans
 from intersection import segmented_intersections
-#from boxes import rect
-from boxesrc import rect
+from boxes import rect
+#from boxesrc import rect
 from contours import max_area
 #import tensorflow as tf
 import sudoku
