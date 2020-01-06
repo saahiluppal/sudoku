@@ -1,16 +1,14 @@
-import warnings
-warnings.filterwarnings('ignore')
 import numpy as np
 import cv2
-import tensorflow.keras as keras
+import tensorflow as tf
 
 def rect(img, intersections):
     image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     image = cv2.adaptiveThreshold(
         image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 101, 1)
-
-    clf = keras.models.load_model('keras_augumented_modelv2.h5')
+    clf = tf.keras.models.load_model('keras_augumented_modelv3.h5')
     font = cv2.FONT_HERSHEY_SIMPLEX
+
 
     img2 = img.copy()
 
@@ -22,7 +20,7 @@ def rect(img, intersections):
             x2 = int(intersections[j + i * 10 + 11][0] - 5)
 
             # cv2.imwrite('/home/sahiluppal/sudoku/vals/'+str((i+1)*(j+1))+'.bmp',img[y1:y2,x1:x2])
-            cv2.rectangle(img2, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            #cv2.rectangle(img2, (x1, y1), (x2, y2), (0, 255, 0), 2)
 
     prediction = list()
     for i in range(9):
