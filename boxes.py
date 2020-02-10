@@ -2,12 +2,14 @@ import numpy as np
 import cv2
 import tensorflow as tf
 
+clf = tf.keras.models.load_model('keras_augumented_modelv3.h5')
+
 def rect(img, intersections):
     image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     image = cv2.adaptiveThreshold(
         image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 101, 1)
-    clf = tf.keras.models.load_model('keras_augumented_modelv3.h5')
-    font = cv2.FONT_HERSHEY_SIMPLEX
+    #clf = tf.keras.models.load_model('keras_augumented_modelv3.h5')
+    #font = cv2.FONT_HERSHEY_SIMPLEX
 
 
     img2 = img.copy()
@@ -45,10 +47,8 @@ def rect(img, intersections):
 
     if len(prediction) != 81:
         print(prediction)
+        return img, prediction, False
     else:
         prediction = np.reshape(prediction,(9,9)).T
         print(prediction)
         return img, prediction, True
-
-
-    return img,prediction, False
