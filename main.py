@@ -15,9 +15,11 @@ import os
 import sys
 #img = cv2.imread('sudoku.jpeg')
 
+
+debug = True
 def main():
     cap = cv2.VideoCapture(0)
-
+    down = False
     filter = True
 
     while True:
@@ -59,30 +61,28 @@ def main():
             x2 = int(x0 - 1000*(-b))
             y2 = int(y0 - 1000*(a))
 
-            #cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 2)
+            if debug:
+                cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 2)
 
         segmented = segment_by_angle_kmeans(filtered_lines)
         intersections = segmented_intersections(segmented) # points
 
-        try:
-            if len(intersections) == 100 and len(filtered_lines) == 20:
-                intersections = [val[0] for val in intersections]
-                intersections = sorted(intersections,key=lambda val: val[0])
-                img, prediction, done = rect(img, intersections)
-                if done:
-                    if sudoku.SolveSudoku(prediction):
-                        print(sudoku.SolveSudoku(prediction))
-                        sys.exit()
-                        os._exit()
-                        quit()
-                    else:
-                        print('badluck')
-        except:
-            pass
-        
+        # Try except may be used here. I removed from here.
+        if len(intersections) == 100 and len(filtered_lines) == 20:
+            intersections = [val[0] for val in intersections]
+            intersections = sorted(intersections,key=lambda val: val[0])
+            img, prediction, done = rect(img, intersections)
+            if done:
+                val = sudoku.SolveSudoku(prediction)
+                if val:
+                    print(val)
+                    sys.exit('Exiting')
+                else:
+                    print('Bad Detection')
+        # Upto here
 
         cv2.imshow('image', img)
-        if cv2.waitKey(10) & 0xFF == ord('q'):
+        if (cv2.waitKey(10) & 0xFF == ord('q')) or down == True:
             break
 
     cv2.destroyAllWindows()
