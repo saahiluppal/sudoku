@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 import tensorflow as tf
 
-clf = tf.keras.models.load_model('keras_augumented_modelv3.h5')
+clf = tf.keras.models.load_model('keras_model.h5')
 
 def rect(img, intersections):
     image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
