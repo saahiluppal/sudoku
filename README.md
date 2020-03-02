@@ -6,7 +6,7 @@ Each frame taken from webcam will be converted to grayscale and then edges are t
 
 ## Requirements:
 - Tensorflow >= 2.0.0
-- Opencv >= 2.4
+- Opencv >= 3.4
 - Numpy
 
 ## Usage:
